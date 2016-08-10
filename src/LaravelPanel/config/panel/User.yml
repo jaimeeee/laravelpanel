@@ -1,5 +1,4 @@
 class: App\User
-title: Users
 icon: fa fa-users
 sort:
   field: name
