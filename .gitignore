@@ -1,5 +1,6 @@
 vendor/
 node_modules/
+config.codekit3
 
 # Laravel 4 specific
 bootstrap/compiled.php

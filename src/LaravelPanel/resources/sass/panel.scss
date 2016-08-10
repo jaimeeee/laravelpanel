@@ -1,0 +1,246 @@
+@import "bourbon";
+//
+// Requires bootstrap
+//
+
+/**
+ * Vars
+ */
+
+$background: #f2f2f2;
+$mainColor: #056faa;
+$secondaryColor: #656565;
+$sidebarWidth: 230px;
+
+/*
+ * Base structure
+ */
+
+body, html {
+  height: 100%;
+  width: 100%;
+}
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  background: $background;
+  color: #666;
+}
+
+a {
+  color: $mainColor;
+  
+  &:hover {
+    color: darken($mainColor, 20%);
+  }
+}
+
+.btn-primary {
+  background: $mainColor;
+  border-color: darken($mainColor, 5%);
+  
+  &:hover {
+    background: darken($mainColor, 10%);
+    border-color: darken($mainColor, 15%);
+  }
+  
+  &:active, &:active:hover {
+    background: darken($mainColor, 15%);
+    border-color: darken($mainColor, 20%);
+  }
+}
+
+#body-iframe {
+  background: #f9f9f9;
+  padding-top: 0;
+}
+#body-iframe .row {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#wrapper {
+  min-height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+/**
+ * Header
+ */
+
+.navbar {
+  background: white;
+  border: none;
+  margin-bottom: 0px;
+  
+  a {
+    color: #fff;
+  }
+}
+
+.navbar-header {
+  background: $secondaryColor;
+  width: $sidebarWidth;
+}
+
+.navbar-default {
+  .navbar-brand {
+    color: white;
+    font-weight: 700;
+    padding: 15px 20px;
+  }
+  
+  .navbar-nav > li > a:focus,
+  .navbar-nav > li > a:hover {
+    background: $background;
+  }
+}
+
+.navbar-collapse {
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  margin-left: $sidebarWidth;
+}
+
+.navbar-right {
+  margin-right: 0px;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    background-color: $secondaryColor;
+    bottom: 0px;
+    box-sizing: border-box;
+    display: block;
+    float: left;
+    padding: 70px 20px 20px;
+    position: absolute;
+    top: 0px;
+    width: $sidebarWidth;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  border-bottom: 2px solid darken($secondaryColor, 5%);
+  font-size: em(15);
+  margin-right: -20px; /* 20px padding + 1px border */
+  margin-bottom: 10px;
+  margin-left: -20px;
+  padding-bottom: 10px;
+  
+  &:last-child {
+    border-bottom: 0px;
+  }
+  
+  &.primary {
+    li > a {
+      font-weight: 600;
+    }
+  }
+}
+
+.nav-sidebar > li > a {
+  color: darken(white, 30%);
+  font-weight: 200;
+  letter-spacing: em(0.4);
+  padding-right: 20px;
+  padding-left: 20px;
+  
+  .glyphicon, .fa {
+    margin-right: 8px;
+  }
+}
+.nav-sidebar > li > a:hover,
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover {
+  color: #fff;
+  background-color: darken($secondaryColor, 5%);
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  margin-left: $sidebarWidth;
+  overflow: hidden;
+  padding: 50px 0px 0px;
+  position: relative;
+  
+  h2 {
+    background: lighten($background, 3%);
+    border-bottom: 1px solid darken($background, 8%);
+    font-weight: 200;
+    margin: 0px;
+    padding: 16px 20px;
+  }
+}
+
+.main .page-header {
+  margin-top: 0;
+}
+
+.content {
+  padding: 20px 35px;
+}
+
+/**
+ * Form horizontal
+ */
+
+.form-horizontal .control-label {
+  font-weight: 400;
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+/*
+ * Photos Iframe
+ */
+
+#files-iframe {
+  background: #f9f9f9;
+}
+#files-iframe iframe {
+  border: none;
+  height: 400px;
+  width: 100%;
+}

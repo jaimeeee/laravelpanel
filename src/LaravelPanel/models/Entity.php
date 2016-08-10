@@ -1,0 +1,94 @@
+<?php
+
+namespace Jaimeeee\Panel;
+
+use File;
+
+use Symfony\Component\Yaml\Yaml;
+
+class Entity
+{
+    private $data;
+    private $paginate;
+    private $sort;
+    public $class;
+    public $deletable = true;
+    public $editable = true;
+    public $fields;
+    public $hidden;
+    public $hideCreate = false;
+    public $icon;
+    public $list;
+    public $name;
+    public $title;
+    public $url;
+    
+    /**
+     * Create a new instance from the Yaml data
+     * @param String  $filePath  The file path
+     */
+    public function __construct($filePath)
+    {
+        $this->data = Yaml::parse(file_get_contents($filePath));
+        
+        $this->class = $this->data['class'];
+        
+        // Get model's name
+        $classParts = explode('\\', $this->class);
+        $this->name = ucwords(is_array($classParts) ? end($classParts) : $classParts);
+        
+        $this->fields = $this->data['fields'];
+        $this->hidden = isset($this->data['hide']) && $this->data['hide'] ? true : false;
+        $this->hideCreate = isset($this->data['create']) && !$this->data['create'] ? true : false;
+        $this->icon = isset($this->data['icon']) ? $this->data['icon'] : '';
+        $this->list = $this->data['list'];
+        $this->paginate = isset($this->data['paginate']) ? $this->data['paginate'] : config('panel.paginate');
+        $this->sort = isset($this->data['sort']) ? $this->data['sort'] : null;
+        $this->title = isset($this->data['title']) ? $this->data['title'] : str_plural($this->name);
+        $this->url = strtolower(str_plural($this->name));
+        
+        // Properties
+        $this->deletable = isset($this->data['deletable']) && !$this->data['deletable'] ? false : true;
+        $this->editable = isset($this->data['editable']) && !$this->data['editable'] ? false : true;
+    }
+    
+    public function all()
+    {
+        $query = '';
+        if (isset($this->sort['field']))
+        {
+            $query = $this->class::orderBy($this->sort['field'],
+                        isset($this->sort['order']) && $this->sort['order'] == 'desc' ? 'desc' : 'asc');
+        }
+        
+        if ($this->paginate)
+            $rows = $query ? $query->paginate($this->paginate) : $this->class::paginate($this->paginate);
+        else
+            $rows = $query ? $query->get() : $this->class::get();
+        
+        return $rows;
+    }
+    
+    /**
+     * Return the list of blueprints as entities
+     * @return Array  Array of Entities
+     */
+    public static function list()
+    {
+        $files = File::files(config_path('panel'));
+        
+        $list = [];
+        foreach ($files as $file)
+        {
+            $list[] = new Entity($file);
+        }
+        
+        return $list;
+    }
+    
+    public function url($path = '')
+    {
+        // Return full URL with or without path
+        return url(config('panel.url') . '/' . $this->url . ($path ? '/' . ltrim($path, '/') : ''));
+    }
+}
