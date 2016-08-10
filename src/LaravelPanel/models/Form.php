@@ -49,13 +49,16 @@ class Form extends HTMLBrick
         /**
          * Submit button
          */
-        $submitButton = new HTMLBrick('button', ($this->record ? 'Edit ' : 'Save ') . $this->entity->name, [
+        $submitButton = new HTMLBrick('button',
+                            $this->record ? trans('panel::global.edit_entity', ['entity' => $this->entity->name()]) :
+                            trans('panel::global.save_entity', ['entity' => $this->entity->name()]),
+                        [
                             'type' => 'submit',
                             'style' => 'margin-left: 8px',
                         ]);
         $submitButton->addClass('btn btn-primary');
         
-        $cancelButton = new HTMLBrick('a', 'Cancel', [
+        $cancelButton = new HTMLBrick('a', trans('panel::global.cancel'), [
                             'href' => url(config('panel.url') . '/' . $this->entity->url),
                         ]);
         $cancelButton->addClass('btn btn-default');

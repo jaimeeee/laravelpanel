@@ -3,11 +3,13 @@
 namespace Jaimeeee\Panel;
 
 use File;
+use Lang;
 use Symfony\Component\Yaml\Yaml;
 
 class Entity
 {
     private $data;
+    private $name;
     private $paginate;
     private $sort;
     public $class;
@@ -18,12 +20,12 @@ class Entity
     public $hideCreate = false;
     public $icon;
     public $list;
-    public $name;
     public $title;
     public $url;
     
     /**
      * Create a new instance from the Yaml data
+     * 
      * @param String  $filePath  The file path
      */
     public function __construct($filePath)
@@ -34,7 +36,7 @@ class Entity
         
         // Get model's name
         $classParts = explode('\\', $this->class);
-        $this->name = ucwords(is_array($classParts) ? end($classParts) : $classParts);
+        $this->name = strtolower(is_array($classParts) ? end($classParts) : $classParts);
         
         $this->fields = $this->data['fields'];
         $this->hidden = isset($this->data['hide']) && $this->data['hide'] ? true : false;
@@ -43,7 +45,7 @@ class Entity
         $this->list = $this->data['list'];
         $this->paginate = isset($this->data['paginate']) ? $this->data['paginate'] : config('panel.paginate');
         $this->sort = isset($this->data['sort']) ? $this->data['sort'] : null;
-        $this->title = isset($this->data['title']) ? $this->data['title'] : str_plural($this->name);
+        $this->title = isset($this->data['title']) ? $this->data['title'] : $this->name(true);
         $this->url = strtolower(str_plural($this->name));
         
         // Properties
@@ -51,6 +53,11 @@ class Entity
         $this->editable = isset($this->data['editable']) && !$this->data['editable'] ? false : true;
     }
     
+    /**
+     * Get all items for an entity paginated or not
+     * 
+     * @return Collection
+     */
     public function all()
     {
         $thisClass = $this->class;
@@ -71,6 +78,7 @@ class Entity
     
     /**
      * Return the list of blueprints as entities
+     * 
      * @return Array  Array of Entities
      */
     public static function entityList()
@@ -85,6 +93,26 @@ class Entity
         return $list;
     }
     
+    /**
+     * Get the name attributed translate and properly pluralized if needed
+     *
+     * @param  boolean $plural
+     * @return string
+     */
+    public function name($plural = false)
+    {
+        if (Lang::has('panel::entities.' . $this->name))
+            return trans_choice('panel::entities.' . $this->name, $plural ? 2 : 1);
+        else
+            return str_plural(ucwords($this->name));
+    }
+    
+    /**
+     * Get entity's panel URL
+     * 
+     * @param  string $path Prepend path
+     * @return string       URL
+     */
     public function url($path = '')
     {
         // Return full URL with or without path

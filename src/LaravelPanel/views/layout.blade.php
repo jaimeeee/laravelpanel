@@ -14,19 +14,19 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+        <li><a href="{{ url('/logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> {{ trans('panel::global.logout') }}</a></li>
       </ul>
     </div>
   </div>
   <div id="wrapper">
     <div class="sidebar" role="navigation">
       <ul class="nav nav-sidebar primary">
-        <li{!! Request::is(ltrim(config('panel.url'), '/')) ? ' class="active"' : null !!}><a href="{{ url(config('panel.url')) }}"><i class="fa fa-tachometer fa-fw" aria-hidden="true"></i> Dashboard</a></li>
+        <li{!! Request::is(ltrim(config('panel.url'), '/')) ? ' class="active"' : null !!}><a href="{{ url(config('panel.url')) }}"><i class="fa fa-tachometer fa-fw" aria-hidden="true"></i> {{ trans('panel::global.dashboard') }}</a></li>
       </ul>
       <ul class="nav nav-sidebar">
 @foreach ($list as $entity)
 @if (!$entity->hidden)
-        <li{!! Request::is(ltrim(config('panel.url'), '/') . '/' . $entity->url . '*') ? ' class="active"' : null !!}><a href="{{ $entity->url() }}"><i class="{{ $entity->icon }} fa-fw" aria-hidden="true"></i> {{ $entity->title }}</a></li>
+        <li{!! Request::is(ltrim(config('panel.url'), '/') . '/' . $entity->url . '*') ? ' class="active"' : null !!}><a href="{{ $entity->url() }}"><i class="{{ $entity->icon }} fa-fw" aria-hidden="true"></i> {{ $entity->name(true) }}</a></li>
 @endif
 @endforeach
       </ul>

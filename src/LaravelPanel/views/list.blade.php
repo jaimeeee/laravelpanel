@@ -4,25 +4,25 @@
 @if (Request::get('deleted'))
     <div class="alert alert-info alert-dismissible fade in" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      The {{ strtolower($entity->name) }} has been <strong>deleted</strong>.
+      {!! trans('panel::global.deleted_msg', ['entity' => strtolower($entity->name())]) !!}
     </div>
 @endif
 @if (Request::get('created'))
     <div class="alert alert-success alert-dismissible fade in" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      The {{ strtolower($entity->name) }} has been <strong>created</strong>!
+      {!! trans('panel::global.created_msg', ['entity' => strtolower($entity->name())]) !!}
     </div>
 @endif
 @if (Request::get('updated'))
     <div class="alert alert-success alert-dismissible fade in" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      The {{ strtolower($entity->name) }} has been <strong>updated</strong>!
+      {!! trans('panel::global.updated_msg', ['entity' => strtolower($entity->name())]) !!}
     </div>
 @endif
     <ul class="nav nav-pills">
 @if (!isset($hideCreateRecord) || !$hideCreateRecord)
       <li>
-        <a href="{{ $entity->url('create') }}">New {{ $entity->name }}</a>
+        <a href="{{ $entity->url('create') }}">{{ trans('panel::global.new_entity', ['entity' => $entity->name()]) }}</a>
       </li>
 @endif
     </ul>
@@ -61,10 +61,10 @@
 <?php /* Ending of to be optimized part */ ?>
 @endforeach
 @if (in_array('edit', $actions))
-          <td style="text-align: right;"><a href="{{ $entity->url($record->id) }}">Edit <i class="fa fa-edit fa-fw" aria-hidden="true"></i></a></td>
+          <td style="text-align: right;"><a href="{{ $entity->url($record->id) }}">{{ trans('panel::global.edit') }} <i class="fa fa-edit fa-fw" aria-hidden="true"></i></a></td>
 @endif
 @if (in_array('delete', $actions))
-          <td style="text-align: right;"><a href="#" data-toggle="modal" data-target="#delete-modal" data-id="{{ $record->id }}">Delete <i class="fa fa-trash fa-fw" aria-hidden="true"></i></a></td>
+          <td style="text-align: right;"><a href="#" data-toggle="modal" data-target="#delete-modal" data-id="{{ $record->id }}">{{ trans('panel::global.delete') }} <i class="fa fa-trash fa-fw" aria-hidden="true"></i></a></td>
 @endif
         </tr>
 @endforeach
@@ -80,14 +80,14 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="delete-modal-label">Delete {{ $entity->name }}</h4>
+            <h4 class="modal-title" id="delete-modal-label">{{ trans('panel::global.delete_entity', ['entity' => $entity->name()]) }}</h4>
           </div>
           <div class="modal-body">
-            Are you sure you want to delete the <strong>{{ strtolower($entity->name) }}</strong>?
+            {!! trans('panel::global.delete_entity_msg', ['entity' => strtolower($entity->name())]) !!}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <a href="#" class="btn btn-danger modal-action">Yes, delete {{ strtolower($entity->name) }}</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('panel::global.cancel') }}</button>
+            <a href="#" class="btn btn-danger modal-action">{{ trans('panel::global.confirm_delete', ['entity' => strtolower($entity->name())]) }}</a>
           </div>
         </div>
       </div>

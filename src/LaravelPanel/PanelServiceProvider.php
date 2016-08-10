@@ -24,13 +24,20 @@ class PanelServiceProvider extends ServiceProvider
         // Set the stylesheets around
         $this->publishes([
             __DIR__ . '/assets/css/panel.css' => public_path('css/panel.css'),
-            __DIR__ . '/resources/sass/panel.scss' => resource_path('assets/sass/panel.scss'),
+            __DIR__ . '/resources/assets/sass/panel.scss' => resource_path('assets/sass/panel.scss'),
         ], 'public');
         
         // Load routes
         if (!$this->app->routesAreCached()) {
             require __DIR__ . '/http/routes.php';
         }
+        
+        // Load translation files
+        $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'panel');
+        
+        $this->publishes([
+            __DIR__ . '/resources/lang' => resource_path('lang/vendor/vendor'),
+        ], 'lang');
         
         // Load views
         $this->loadViewsFrom(__DIR__ . '/views', 'panel');
