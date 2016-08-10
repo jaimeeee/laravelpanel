@@ -19,13 +19,14 @@ class PanelServiceProvider extends ServiceProvider
         // Set config file
         $this->publishes([
             __DIR__ . '/config/panel.php' => config_path('panel.php'),
+            __DIR__ . '/config/panel/User.yml' => config_path('panel/User.yml'),
         ], 'config');
         
-        // Set the public files
+        // Set the stylesheets around
         $this->publishes([
             __DIR__ . '/assets/css/panel.css' => public_path('css/panel.css'),
-            __DIR__ . '/resources/sass/_normalize.scss' => resource_path('sass/_normalize.scss'),
-            __DIR__ . '/resources/sass/panel.scss' => resource_path('sass/panel.scss'),
+            __DIR__ . '/resources/sass/_normalize.scss' => resource_path('assets/sass/_normalize.scss'),
+            __DIR__ . '/resources/sass/panel.scss' => resource_path('assets/sass/panel.scss'),
         ], 'public');
         
         // Load routes
@@ -52,7 +53,7 @@ class PanelServiceProvider extends ServiceProvider
         
         // Pass links to the sidebar
         View::composer('panel::layout', function($view) {
-            View::share('list', Entity::entityList());
+            View::share('list', Entity::all());
         });
     }
 }
