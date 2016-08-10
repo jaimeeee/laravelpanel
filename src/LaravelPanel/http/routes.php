@@ -13,7 +13,7 @@ Route::group(['middleware' => 'web', 'prefix' => config('panel.url')], function(
     /**
      * List certain model
      */
-    Route::get('{entity}', 'Jaimeeee\Panel\Controllers\PanelController@list')->where('entity', '[a-z]+');
+    Route::get('{entity}', 'Jaimeeee\Panel\Controllers\PanelController@formList')->where('entity', '[a-z]+');
     
     /**
      * CRUD methods

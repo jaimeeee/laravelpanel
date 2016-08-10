@@ -16,7 +16,7 @@ Require this package with Composer:
 composer require jaimeeee/laravelpanel
 ```
 
-After updating Composer, add the Service Provider to the providers array in config/app.php:
+After updating Composer, add the Service Provider to the providers array in `config/app.php`:
 
 ```php
 Jaimeeee\Panel\PanelServiceProvider::class,

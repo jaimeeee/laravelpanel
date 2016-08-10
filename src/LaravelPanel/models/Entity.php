@@ -53,16 +53,18 @@ class Entity
     
     public function all()
     {
+        $thisClass = $this->class;
+        
         $query = '';
         if (isset($this->sort['field'])) {
-            $query = $this->class::orderBy($this->sort['field'],
+            $query = $thisClass::orderBy($this->sort['field'],
                         isset($this->sort['order']) && $this->sort['order'] == 'desc' ? 'desc' : 'asc');
         }
         
         if ($this->paginate)
-            $rows = $query ? $query->paginate($this->paginate) : $this->class::paginate($this->paginate);
+            $rows = $query ? $query->paginate($this->paginate) : $thisClass::paginate($this->paginate);
         else
-            $rows = $query ? $query->get() : $this->class::get();
+            $rows = $query ? $query->get() : $thisClass::get();
         
         return $rows;
     }

@@ -42,7 +42,7 @@ class PanelController extends Controller
      * Show an entity list
      * @return \Illuminate\Http\Response
      */
-    public function list($entity)
+    public function formList($entity)
     {
         if ($entity = $this->entityFromYamlFile($entity)) {
             $list = new FormList($entity);
@@ -105,7 +105,8 @@ class PanelController extends Controller
     {
         if ($entity = $this->entityFromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
-            $record = $entity->class::findOrFail($id);
+            $entityClass = $entity->class;
+            $record = $entityClass::findOrFail($id);
             
             $form = new Form($entity, $record, Session::get('errors'));
             
@@ -123,7 +124,8 @@ class PanelController extends Controller
     {
         if ($entity = $this->entityFromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
-            $record = $entity->class::findOrFail($id);
+            $entityClass = $entity->class;
+            $record = $entityClass::findOrFail($id);
             
             $validationRules = [];
             foreach ($entity->fields as $name => $options) {
@@ -155,7 +157,8 @@ class PanelController extends Controller
     {
         if ($entity = $this->entityFromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
-            $record = $entity->class::findOrFail($id);
+            $entityClass = $entity->class;
+            $record = $entityClass::findOrFail($id);
             
             // TODO: Find and delete created images
             
