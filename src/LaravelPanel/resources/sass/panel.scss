@@ -81,14 +81,27 @@ a {
 
 .navbar-header {
   background: $secondaryColor;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
   width: $sidebarWidth;
+  @include transition(all 0.2s);
+  
+  &:hover {
+    background: lighten($secondaryColor, 5%);
+  }
 }
 
 .navbar-default {
   .navbar-brand {
     color: white;
+    display: block;
+    float: none;
     font-weight: 700;
-    padding: 15px 20px;
+    line-height: 34px;
+    padding: 8px 20px;
+    
+    &:hover {
+      color: white;
+    }
   }
   
   .navbar-nav > li > a:focus,
@@ -142,7 +155,7 @@ a {
 /* Sidebar navigation */
 .nav-sidebar {
   border-bottom: 2px solid darken($secondaryColor, 5%);
-  font-size: em(15);
+  font-size: em(16);
   margin-right: -20px; /* 20px padding + 1px border */
   margin-bottom: 10px;
   margin-left: -20px;
@@ -153,18 +166,22 @@ a {
   }
   
   &.primary {
+    border-bottom: 1px solid darken($secondaryColor, 2%);
+    padding-bottom: 5px;
+    
     li > a {
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 }
 
 .nav-sidebar > li > a {
-  color: darken(white, 30%);
+  color: darken(white, 20%);
   font-weight: 200;
   letter-spacing: em(0.4);
   padding-right: 20px;
   padding-left: 20px;
+  @include transition(all 0.2s);
   
   .glyphicon, .fa {
     margin-right: 8px;
@@ -174,7 +191,7 @@ a {
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover {
   color: #fff;
-  background-color: darken($secondaryColor, 5%);
+  background-color: darken($secondaryColor, 7%);
 }
 
 
