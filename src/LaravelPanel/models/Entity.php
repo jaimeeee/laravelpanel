@@ -73,7 +73,7 @@ class Entity
      * Return the list of blueprints as entities
      * @return Array  Array of Entities
      */
-    public static function list()
+    public static function entityList()
     {
         $files = File::files(config_path('panel'));
         
