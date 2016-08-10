@@ -3,7 +3,6 @@
 namespace Jaimeeee\Panel;
 
 use View;
-
 use Illuminate\Support\ServiceProvider;
 use Jaimeeee\Panel\Entity;
 
@@ -30,8 +29,7 @@ class PanelServiceProvider extends ServiceProvider
         ], 'public');
         
         // Load routes
-        if (!$this->app->routesAreCached())
-        {
+        if (!$this->app->routesAreCached()) {
             require __DIR__ . '/http/routes.php';
         }
         

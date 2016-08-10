@@ -20,8 +20,7 @@ class HTML
     {
         // Build attributes
         $attributes = [];
-        foreach ($attr as $name => $value)
-        {
+        foreach ($attr as $name => $value) {
             $attributes[] = $name . '="' . $value . '"';
         }
         

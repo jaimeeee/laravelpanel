@@ -15,19 +15,16 @@ class SelectField extends BaseField
      */
     public function field()
     {
-        if (is_array($this->options['options']))
-        {
-            
+        if (is_array($this->options['options'])) {
+            // TODO: Show custom options, not from a database
         }
-        else if ($optionClass = $this->options['options'])
-        {
+        else if ($optionClass = $this->options['options']) {
             $options = $optionClass::orderBy((isset($this->options['optionsSort']) ? $this->options['optionsSort'] : 'id'),
                                               (isset($this->options['optionsSortOrder']) ? $this->options['optionsSortOrder'] : 'asc'))->get();
         }
         
         $optionsCode = '';
-        foreach ($options as $option)
-        {
+        foreach ($options as $option) {
             $optionValue = isset($this->options['optionsValue']) ? $this->options['optionsValue'] : 'id';
             $optionShow = isset($this->options['optionsShow']) ? $this->options['optionsShow'] : 'name';
             

@@ -3,7 +3,6 @@
 namespace Jaimeeee\Panel;
 
 use File;
-
 use Symfony\Component\Yaml\Yaml;
 
 class Entity
@@ -55,8 +54,7 @@ class Entity
     public function all()
     {
         $query = '';
-        if (isset($this->sort['field']))
-        {
+        if (isset($this->sort['field'])) {
             $query = $this->class::orderBy($this->sort['field'],
                         isset($this->sort['order']) && $this->sort['order'] == 'desc' ? 'desc' : 'asc');
         }
@@ -78,8 +76,7 @@ class Entity
         $files = File::files(config_path('panel'));
         
         $list = [];
-        foreach ($files as $file)
-        {
+        foreach ($files as $file) {
             $list[] = new Entity($file);
         }
         

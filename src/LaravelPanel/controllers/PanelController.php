@@ -44,8 +44,7 @@ class PanelController extends Controller
      */
     public function list($entity)
     {
-        if ($entity = $this->entityFromYamlFile($entity))
-        {
+        if ($entity = $this->entityFromYamlFile($entity)) {
             $list = new FormList($entity);
             
             return $list->view();
@@ -60,8 +59,7 @@ class PanelController extends Controller
      */
     public function create($entity)
     {
-        if ($entity = $this->entityFromYamlFile($entity))
-        {
+        if ($entity = $this->entityFromYamlFile($entity)) {
             $form = new Form($entity, null, Session::get('errors'));
             
             return $form->view();
@@ -76,18 +74,18 @@ class PanelController extends Controller
      */
     public function publish(Request $request, $entity)
     {
-        if ($entity = $this->entityFromYamlFile($entity))
-        {
+        if ($entity = $this->entityFromYamlFile($entity)) {
+            
             $validationRules = [];
-            foreach ($entity->fields as $name => $options)
+            foreach ($entity->fields as $name => $options) {
                 if (isset($options['validate']))
                     $validationRules[$name] = $options['validate'];
+            }
             $this->validate($request, $validationRules);
             
             // If data is validated and everything seems good, lets create the record
             $record = new $entity->class();
-            foreach ($entity->fields as $name => $options)
-            {
+            foreach ($entity->fields as $name => $options) {
                 if (!in_array($options['type'], $this->ignoredTypes))
                     $record->$name = $request->input($name);
             }
@@ -105,8 +103,7 @@ class PanelController extends Controller
      */
     public function edit($entity, $id)
     {
-        if ($entity = $this->entityFromYamlFile($entity))
-        {
+        if ($entity = $this->entityFromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
             $record = $entity->class::findOrFail($id);
             
@@ -124,14 +121,12 @@ class PanelController extends Controller
      */
     public function update(Request $request, $entity, $id)
     {
-        if ($entity = $this->entityFromYamlFile($entity))
-        {
+        if ($entity = $this->entityFromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
             $record = $entity->class::findOrFail($id);
             
             $validationRules = [];
-            foreach ($entity->fields as $name => $options)
-            {
+            foreach ($entity->fields as $name => $options) {
                 if (isset($options['validate']))
                     $validationRules[$name] = $options['validate'];
                 if (isset($options['validateAtEdit']))
@@ -140,8 +135,7 @@ class PanelController extends Controller
             $this->validate($request, $validationRules);
             
             // If data is validated and everything seems good, lets update the record
-            foreach ($entity->fields as $name => $options)
-            {
+            foreach ($entity->fields as $name => $options) {
                 if (!in_array($options['type'], $this->ignoredTypes))
                     $record->$name = $request->input($name);
             }
@@ -159,8 +153,7 @@ class PanelController extends Controller
      */
     public function delete($entity, $id)
     {
-        if ($entity = $this->entityFromYamlFile($entity))
-        {
+        if ($entity = $this->entityFromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
             $record = $entity->class::findOrFail($id);
             
@@ -183,8 +176,7 @@ class PanelController extends Controller
     {
         $path = config_path('panel/' . ucwords(str_singular($entity)) . '.yml');
         
-        if (file_exists($path))
-        {
+        if (file_exists($path)) {
             $entity = new Entity($path);
             return $entity;
         }

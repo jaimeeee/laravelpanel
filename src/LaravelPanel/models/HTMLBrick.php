@@ -38,8 +38,7 @@ class HTMLBrick
      */
     public function addClass($class)
     {
-        if (isset($this->attr['class']))
-        {
+        if (isset($this->attr['class'])) {
             $classes = explode(' ', $this->attr['class']);
             if (!in_array($class, $classes))
                 $classes[] = $class;
@@ -56,8 +55,7 @@ class HTMLBrick
      */
     public function removeClass($class)
     {
-        if (isset($this->attr['class']))
-        {
+        if (isset($this->attr['class'])) {
             $classes = explode(' ', $this->attr['class']);
             if (in_array($class, $classes))
                 $classes = array_diff($classes, [$class]);

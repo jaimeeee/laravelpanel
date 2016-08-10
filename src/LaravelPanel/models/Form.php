@@ -34,8 +34,7 @@ class Form extends HTMLBrick
                     ]);
         $code = $token->field();
         
-        foreach ($this->entity->fields as $name => $options)
-        {
+        foreach ($this->entity->fields as $name => $options) {
             $type = ucwords($options['type']);
             $className = 'Jaimeeee\\Panel\\Fields\\' . $type . '\\' . $type . 'Field';
             $field = new $className($name, $options);
