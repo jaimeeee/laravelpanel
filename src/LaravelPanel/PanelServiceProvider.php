@@ -50,7 +50,7 @@ class PanelServiceProvider extends ServiceProvider
         
         // Pass links to the sidebar
         View::composer('panel::layout', function($view) {
-            View::share('list', Entity::all());
+            View::share('list', Entity::entityList());
         });
     }
 }
