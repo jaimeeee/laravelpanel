@@ -24,7 +24,6 @@ class PanelServiceProvider extends ServiceProvider
         // Set the stylesheets around
         $this->publishes([
             __DIR__ . '/assets/css/panel.css' => public_path('css/panel.css'),
-            __DIR__ . '/resources/sass/_normalize.scss' => resource_path('assets/sass/_normalize.scss'),
             __DIR__ . '/resources/sass/panel.scss' => resource_path('assets/sass/panel.scss'),
         ], 'public');
         
