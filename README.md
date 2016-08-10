@@ -48,7 +48,6 @@ This is an example blueprint:
 
 ```yaml
 class: App\User
-title: Users
 icon: fa fa-users
 sort:
   field: name
@@ -65,7 +64,7 @@ fields:
     validate: required
   email:
     label: E-Mail
-    type:  text
+    type: text
     placeholder: email@somewebsite.com
     validate: required|email
 ```

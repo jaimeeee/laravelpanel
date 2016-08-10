@@ -27,4 +27,6 @@ return [
     'delete_entity_msg' => 'Are you sure you want to delete the <strong>:entity</strong>?',
     'cancel' => 'Cancel',
     'confirm_delete' => 'Yes, delete :entity',
+    
+    'missing_error' => '<strong>Error!</strong> Some of the fields have missing or wrong data.',
 ];

@@ -3,7 +3,7 @@
 @section('content')
 @if (count($errors) > 0)
     <div class="alert alert-danger">
-      <strong>Error!</strong> Some of the fields have missing or wrong data.
+      {!! trans('panel::global.missing_error') !!}
     </div>
 @endif
     <div class="panel panel-default">
