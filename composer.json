@@ -22,7 +22,7 @@
     ],
     "autoload": {
         "classmap": [
-            "src/models"
+            "src/LaravelPanel/models"
         ],
         "psr-4": {
             "Jaimeeee\\Panel\\": "src/LaravelPanel"
