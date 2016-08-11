@@ -36,7 +36,7 @@ class PanelServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/resources/lang', 'panel');
         
         $this->publishes([
-            __DIR__ . '/resources/lang' => resource_path('lang/vendor/vendor'),
+            __DIR__ . '/resources/lang' => resource_path('lang/vendor/panel'),
         ], 'lang');
         
         // Load views

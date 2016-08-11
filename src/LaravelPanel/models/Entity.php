@@ -39,7 +39,7 @@ class Entity
         $this->name = strtolower(is_array($classParts) ? end($classParts) : $classParts);
         
         $this->fields = $this->data['fields'];
-        $this->hidden = isset($this->data['hide']) && $this->data['hide'] ? true : false;
+        $this->hidden = isset($this->data['hidden']) && $this->data['hidden'] ? true : false;
         $this->hideCreate = isset($this->data['create']) && !$this->data['create'] ? true : false;
         $this->icon = isset($this->data['icon']) ? $this->data['icon'] : '';
         $this->list = $this->data['list'];
