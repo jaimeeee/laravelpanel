@@ -15,8 +15,6 @@ use App\Http\Requests;
 
 class PanelController extends Controller
 {
-    private $ignoredTypes = ['file', 'line'];
-    
     /**
      * Create a new controller instance, using the auth middleware
      *
@@ -29,6 +27,7 @@ class PanelController extends Controller
     
     /**
      * Show the panel dashboard
+     * 
      * @return \Illuminate\Http\Response
      */
     public function dashboard()
@@ -40,6 +39,7 @@ class PanelController extends Controller
     
     /**
      * Show an entity list
+     * 
      * @return \Illuminate\Http\Response
      */
     public function formList($entity)
@@ -54,7 +54,8 @@ class PanelController extends Controller
     }
     
     /**
-     * Show an entity list
+     * Show the form to create a new record
+     * 
      * @return \Illuminate\Http\Response
      */
     public function create($entity)
@@ -69,27 +70,36 @@ class PanelController extends Controller
     }
     
     /**
-     * Show an entity list
+     * Submit the new record
+     * 
      * @return \Illuminate\Http\Response
      */
     public function publish(Request $request, $entity)
     {
         if ($entity = $this->entityFromYamlFile($entity)) {
             
-            $validationRules = [];
-            foreach ($entity->fields as $name => $options) {
-                if (isset($options['validate']))
-                    $validationRules[$name] = $options['validate'];
-            }
-            $this->validate($request, $validationRules);
+            // Get validation from entity rules and validate
+            $this->validate($request, $this->validationRules($entity->fields));
             
             // If data is validated and everything seems good, lets create the record
             $record = new $entity->class();
-            foreach ($entity->fields as $name => $options) {
-                if (!in_array($options['type'], $this->ignoredTypes))
-                    $record->$name = $request->input($name);
+            
+            foreach ($entity->fields as $field => $options) {
+                $type = ucwords($options['type']);
+                $className = 'Jaimeeee\\Panel\\Fields\\' . $type . '\\' . $type . 'Field';
+                
+                if (!isset($className::$ignore) || !$className::$ignore)
+                    $record->$field = $request->input($field);
+                
+                // Lets see if the call method exists, and if it does, we should trust the field ¯\_(ツ)_/¯
+                if (method_exists($className, 'call'))
+                    $className::call($request, $entity, $record);
             }
+            
             $record->save();
+            
+            // Upload single images
+            // $this->uploadImages($request, $record, $entity);
             
             return redirect(config('panel.url') . '/' . $entity->url . '?created=1');
         }
@@ -98,7 +108,8 @@ class PanelController extends Controller
     }
     
     /**
-     * Show an entity list
+     * Show the form to edit a record
+     * 
      * @return \Illuminate\Http\Response
      */
     public function edit($entity, $id)
@@ -117,7 +128,8 @@ class PanelController extends Controller
     }
     
     /**
-     * Show an entity list
+     * Update a record
+     * 
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $entity, $id)
@@ -127,21 +139,26 @@ class PanelController extends Controller
             $entityClass = $entity->class;
             $record = $entityClass::findOrFail($id);
             
-            $validationRules = [];
-            foreach ($entity->fields as $name => $options) {
-                if (isset($options['validate']))
-                    $validationRules[$name] = $options['validate'];
-                if (isset($options['validateAtEdit']))
-                    $validationRules[$name] = $options['validateAtEdit'];
-            }
-            $this->validate($request, $validationRules);
+            // Get validation from entity rules and validate
+            $this->validate($request, $this->validationRules($entity->fields, true));
             
             // If data is validated and everything seems good, lets update the record
-            foreach ($entity->fields as $name => $options) {
-                if (!in_array($options['type'], $this->ignoredTypes))
-                    $record->$name = $request->input($name);
+            foreach ($entity->fields as $field => $options) {
+                $type = ucwords($options['type']);
+                $className = 'Jaimeeee\\Panel\\Fields\\' . $type . '\\' . $type . 'Field';
+                
+                if (!isset($className::$ignore) || !$className::$ignore)
+                    $record->$field = $request->input($field);
+                
+                // Lets see if the call method exists, and if it does, we should trust the field ¯\_(ツ)_/¯
+                if (method_exists($className, 'call'))
+                    $className::call($request, $record, $field, $options);
             }
+            
             $record->save();
+            
+            // Upload single images
+            // $this->uploadImages($request, $record, $entity);
             
             return redirect(config('panel.url') . '/' . $entity->url . '?updated=1');
         }
@@ -150,7 +167,8 @@ class PanelController extends Controller
     }
     
     /**
-     * Show an entity list
+     * Delete a record
+     * 
      * @return \Illuminate\Http\Response
      */
     public function delete($entity, $id)
@@ -172,8 +190,9 @@ class PanelController extends Controller
     
     /**
      * Get an Entity object from a Yaml file
+     * 
      * @param  string $entity The entity name
-     * @return \Jaimeeee\Panel\Entity
+     * @return \Panel\Entity
      */
     private function entityFromYamlFile($entity)
     {
@@ -185,5 +204,40 @@ class PanelController extends Controller
         }
         else
             return false;
+    }
+    
+    /**
+     * Return the validation rules for each field
+     * 
+     * @param  array    $fields  Array of fields
+     * @param  boolean  $edit    If it needs to read additional rules at edit
+     * @return string            
+     */
+    private function validationRules($fields, $edit = false)
+    {
+        $validationRules = [];
+        
+        // Go through each field to find validation rules
+        foreach ($fields as $name => $options) {
+            if (isset($options['validate'])) {
+                $validationRules[$name] = $options['validate'];
+                
+                // Change validation rules if there's validations as edit
+                if ($edit && isset($options['validateAtEdit']))
+                    $validationRules[$name] = $options['validateAtEdit'];
+                
+                if ($options['type'] == 'image') {
+                    $rules = explode('|', $validationRules[$name]);
+                    
+                    // If there isn't a validation rule for the image, add it
+                    if (!in_array('image', $rules))
+                        $rules[] = 'image';
+                    
+                    $validationRules[$name] = implode('|', $rules);
+                }
+            }
+        }
+        
+        return $validationRules;
     }
 }

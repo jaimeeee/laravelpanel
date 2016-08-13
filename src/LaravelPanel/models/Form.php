@@ -29,11 +29,13 @@ class Form extends HTMLBrick
      */
     public function code()
     {
+        // Set the CSRF token field
         $token = new HiddenField('_token', [
                         'value' => csrf_token(),
                     ]);
         $code = $token->field();
         
+        // Go through each field on the blueprint
         foreach ($this->entity->fields as $name => $options) {
             $type = ucwords($options['type']);
             $className = 'Jaimeeee\\Panel\\Fields\\' . $type . '\\' . $type . 'Field';
@@ -100,6 +102,7 @@ class Form extends HTMLBrick
                         'entity' => $this->entity,
                         'record' => $this->record,
                         'title' => $this->entity->title,
+                        'panel' => $this->record ? trans('panel::global.edit_entity', ['entity' => $this->entity->name()]) : trans('panel::global.save_entity', ['entity' => $this->entity->name()]),
                         'formCode' => $code,
                     ]);
     }

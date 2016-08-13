@@ -7,6 +7,7 @@ use Jaimeeee\Panel\Fields\InputField;
 
 class FileField extends InputField
 {
+    public static $ignore = true;
     public $type = 'file';
     
     /**

@@ -6,7 +6,7 @@ use Jaimeeee\Panel\HTMLBrick;
 
 class LineField
 {
-    public $type = 'hidden';
+    public static $ignore = true;
     
     /**
      * Creates the field code
