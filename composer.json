@@ -28,5 +28,9 @@
             "Jaimeeee\\Panel\\": "src/LaravelPanel"
         }
     },
+    "post-update-cmd": [
+        "php artisan asset:publish --provider=\"Jaimeeee\\Panel\\PanelServiceProvider\" --tag=public --force",
+        "php artisan asset:publish --provider=\"Jaimeeee\\Panel\\PanelServiceProvider\" --tag=config --force"
+    ],
     "minimum-stability": "stable"
 }
