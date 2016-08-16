@@ -8,7 +8,7 @@ use Jaimeeee\Panel\Fields\Text\TextField;
 
 class DateField extends TextField
 {
-    static $format = 'dd/mm/yyyy';
+    static $format = 'yyyy-mm-dd';
     
     /**
      * Creates the field code
