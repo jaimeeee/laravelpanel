@@ -53,8 +53,10 @@ class DateField extends TextField
         
         $code .= '  <script>
     $(\'input.date-field\').datepicker({
+      autoclose: true,
       format: \'' . DateField::$format . '\',
-      language: \'' . App::getLocale() . '\'
+      language: \'' . App::getLocale() . '\',
+      todayHighlight: true
     });
   </script>';
         
