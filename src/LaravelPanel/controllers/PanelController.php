@@ -93,7 +93,7 @@ class PanelController extends Controller
                 
                 // Lets see if the call method exists, and if it does, we should trust the field ¯\_(ツ)_/¯
                 if (method_exists($className, 'call'))
-                    $className::call($request, $entity, $record);
+                    $className::call($request, $record, $field, $options);
             }
             
             $record->save();
