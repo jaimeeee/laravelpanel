@@ -11,6 +11,7 @@ class InputField extends BaseField
     
     /**
      * Creates the field code
+     * 
      * @return HTMLBrick
      */
     public function field()

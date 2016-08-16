@@ -1,5 +1,9 @@
 @extends('panel::layout')
 
+@section('header')
+{!! $header !!}
+@endsection
+
 @section('content')
 @if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -14,4 +18,8 @@
 {!! $formCode !!}
       </div>
     </div>
+@endsection
+
+@section('footer')
+{!! $footer !!}
 @endsection

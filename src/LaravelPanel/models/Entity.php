@@ -104,7 +104,7 @@ class Entity
         if (Lang::has('panel::entities.' . $this->name))
             return trans_choice('panel::entities.' . $this->name, $plural ? 2 : 1);
         else
-            return str_plural(ucwords($this->name));
+            return $plural ? str_plural(ucwords($this->name)) : ucwords($this->name);
     }
     
     /**

@@ -91,6 +91,48 @@ class Form extends HTMLBrick
     }
     
     /**
+     * Return each fields' header code
+     * 
+     * @return string
+     */
+    private function header()
+    {
+        $fields = collect($this->entity->fields)->unique('type')->all();
+        $codeArray = [];
+        
+        foreach ($fields as $name => $options) {
+            $type = ucwords($options['type']);
+            $className = 'Jaimeeee\\Panel\\Fields\\' . $type . '\\' . $type . 'Field';
+            
+            if (method_exists($className, 'header'))
+                $codeArray[] = '  ' . $className::header();
+        }
+        
+        return implode(chr(10), $codeArray);
+    }
+    
+    /**
+     * Return each fields' footer code
+     * 
+     * @return string
+     */
+    private function footer()
+    {
+        $fields = collect($this->entity->fields)->unique('type')->all();
+        $codeArray = [];
+        
+        foreach ($fields as $name => $options) {
+            $type = ucwords($options['type']);
+            $className = 'Jaimeeee\\Panel\\Fields\\' . $type . '\\' . $type . 'Field';
+            
+            if (method_exists($className, 'footer'))
+                $codeArray[] = '  ' . $className::footer();
+        }
+        
+        return implode(chr(10), $codeArray);
+    }
+    
+    /**
      * Return the form view
      * @return \Illuminate\Http\Response
      */
@@ -100,9 +142,11 @@ class Form extends HTMLBrick
         
         return view('panel::form', [
                         'entity' => $this->entity,
+                        'header' => $this->header(),
                         'record' => $this->record,
                         'title' => $this->entity->title,
                         'panel' => $this->record ? trans('panel::global.edit_entity', ['entity' => $this->entity->name()]) : trans('panel::global.save_entity', ['entity' => $this->entity->name()]),
+                        'footer' => $this->footer(),
                         'formCode' => $code,
                     ]);
     }
