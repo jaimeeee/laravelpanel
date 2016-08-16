@@ -90,6 +90,13 @@ class PanelController extends Controller
                 
                 if (!isset($className::$ignore) || !$className::$ignore)
                     $record->$field = $request->input($field);
+            }
+            
+            $record->save();
+            
+            foreach ($entity->fields as $field => $options) {
+                $type = ucwords($options['type']);
+                $className = 'Jaimeeee\\Panel\\Fields\\' . $type . '\\' . $type . 'Field';
                 
                 // Lets see if the call method exists, and if it does, we should trust the field ¯\_(ツ)_/¯
                 if (method_exists($className, 'call'))
