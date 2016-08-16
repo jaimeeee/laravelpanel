@@ -56,18 +56,6 @@
     relative_urls: false,
     image_advtab: true
   });
-  tinymce.init({
-    selector: 'textarea.rich-simple',
-    menubar: false,
-    statusbar: false,
-    plugins: "code",
-    toolbar: "bold italic | code",
-    relative_urls: false,
-    image_advtab: true,
-    forced_root_block : '', 
-    force_br_newlines : true,
-    force_p_newlines : false,
-  });
   </script>
 @yield('footer')
 </body>
