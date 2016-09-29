@@ -36,5 +36,17 @@ return [
     */
     
     'paginate' => 30,
-
+    
+    /*
+    |--------------------------------------------------------------------------
+    | TinyMCE plugin configuration
+    |--------------------------------------------------------------------------
+    |
+    | The plugins and toolbar configuration
+    |
+    */
+    
+    'tinyMCEPlugins' => 'code,paste,image,media,link,visualblocks,textcolor,colorpicker',
+    'tinyMCEToolbar' => 'undo redo | forecolor removeformat | bold italic | alignleft aligncenter alignright
+        alignjustify | image media link | bullist numlist outdent indent | visualblocks code',
 ];

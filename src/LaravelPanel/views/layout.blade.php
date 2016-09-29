@@ -51,8 +51,8 @@
     selector: 'textarea.rich',
     menubar: false,
     statusbar: false,
-    plugins: "code,paste,image,media,link,visualblocks,textcolor,colorpicker",
-    toolbar: "undo redo | forecolor removeformat | bold italic | alignleft aligncenter alignright alignjustify | image media link | bullist numlist outdent indent | visualblocks code",
+    plugins: "{!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEPlugins'))) !!}",
+    toolbar: "{!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEToolbar'))) !!}",
     relative_urls: false,
     image_advtab: true
   });
