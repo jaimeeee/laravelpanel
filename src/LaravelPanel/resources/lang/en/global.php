@@ -10,7 +10,10 @@ return [
     | The following language lines are the default lines for the panel
     |
     */
-
+    
+    'yes' => 'Yes',
+    'no' => 'No',
+    
     'logout' => 'Logout',
     'dashboard' => 'Dashboard',
     'edit' => 'Edit',

@@ -11,6 +11,9 @@ return [
     |
     */
 
+    'yes' => 'Sí',
+    'no' => 'No',
+    
     'logout' => 'Salir',
     'dashboard' => 'Dashboard',
     'edit' => 'Editar',
