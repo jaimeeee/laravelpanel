@@ -51,8 +51,8 @@
     selector: 'textarea.rich',
     menubar: false,
     statusbar: false,
-    plugins: "{!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEPlugins'))) !!}",
-    toolbar: "{!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEToolbar'))) !!}",
+    plugins: {!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEPlugins'))) !!},
+    toolbar: {!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEToolbar'))) !!},
     relative_urls: false,
     image_advtab: true
   });

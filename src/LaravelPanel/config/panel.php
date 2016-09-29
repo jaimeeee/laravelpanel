@@ -46,7 +46,7 @@ return [
     |
     */
     
-    'tinyMCEPlugins' => 'code,paste,image,media,link,visualblocks,textcolor,colorpicker',
-    'tinyMCEToolbar' => 'undo redo | forecolor removeformat | bold italic | alignleft aligncenter alignright
-        alignjustify | image media link | bullist numlist outdent indent | visualblocks code',
+    'tinyMCEPlugins' => '"code,paste,image,media,link,visualblocks,textcolor,colorpicker"',
+    'tinyMCEToolbar' => '["undo redo | forecolor removeformat | bold italic | alignleft aligncenter alignright
+        alignjustify | image media link | bullist numlist outdent indent | visualblocks code"]',
 ];
