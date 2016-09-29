@@ -90,7 +90,9 @@ class Entity
             $list[] = new Entity($file);
         }
         
-        return $list;
+        return collect($list)->sortBy(function ($entity) {
+            return $entity->name();
+        });
     }
     
     /**
