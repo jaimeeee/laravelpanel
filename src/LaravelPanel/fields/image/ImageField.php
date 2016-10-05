@@ -71,7 +71,8 @@ class ImageField extends InputField
                 $filename = $record->id;
             }
             
-            $originalFilename = $filename . '_o.' . $request->file($field)->guessExtension();
+            $fileExtension = $request->file($field)->guessExtension();
+            $originalFilename = $filename . '.' . $fileExtension;
             
             $request->file($field)->move($directory, $originalFilename);
             
@@ -79,7 +80,7 @@ class ImageField extends InputField
             // default: image_name
             $imageNameColumn = isset($options['imageNameColumn']) ? $options['imageNameColumn'] : 'image_name';
             if (Schema::hasColumn($record->getTable(), $imageNameColumn)) {
-                $record->$imageNameColumn = $filename;
+                $record->$imageNameColumn = $filename . (isset($options['includeExtension']) && $options['includeExtension'] ? '.' . $fileExtension : '');
                 $record->update();
             }
             
