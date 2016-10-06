@@ -22,6 +22,7 @@ class Entity
     public $list;
     public $title;
     public $url;
+    public $images;
     
     /**
      * Create a new instance from the Yaml data
@@ -47,6 +48,7 @@ class Entity
         $this->sort = isset($this->data['sort']) ? $this->data['sort'] : null;
         $this->title = isset($this->data['title']) ? $this->data['title'] : $this->name(true);
         $this->url = strtolower(str_plural($this->name));
+        $this->images = isset($this->data['images']) ? $this->data['images'] : '';
         
         // Properties
         $this->deletable = isset($this->data['deletable']) && !$this->data['deletable'] ? false : true;

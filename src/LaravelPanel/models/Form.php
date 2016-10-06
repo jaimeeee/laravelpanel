@@ -140,6 +140,25 @@ class Form extends HTMLBrick
     {
         $code = $this->code();
         
+        // If there are images supposed to appear on the editor, lets find them
+        $imageList = [];
+        if (isset($this->entity->images['class']) && $imageClass = $this->entity->images['class']) {
+            $images = $imageClass::orderBy(isset($this->entity->images['field']) ? $this->entity->images['field'] : 'created_at',
+                                           isset($this->entity->images['order']) ? $this->entity->images['order'] : 'desc')
+                      ->get();
+            
+            foreach ($images as $image) {
+                $value = isset($this->entity->images['value']) ?
+                                $image->$this->entity->images['value'] :
+                                $image->image_name;
+                
+                $imageList[] = [
+                    'title' => (isset($this->entity->images['title']) ? $image->$this->entity->images['title'] : $image->description) ?: $value,
+                    'value' => asset(rtrim($this->entity->images['path'], '/') . '/' . $value),
+                ];
+            }
+        }
+        
         return view('panel::form', [
                         'entity' => $this->entity,
                         'header' => $this->header(),
@@ -148,6 +167,7 @@ class Form extends HTMLBrick
                         'panel' => $this->record ? trans('panel::global.edit_entity', ['entity' => $this->entity->name()]) : trans('panel::global.save_entity', ['entity' => $this->entity->name()]),
                         'footer' => $this->footer(),
                         'formCode' => $code,
+                        'imageList' => $imageList,
                     ]);
     }
 }

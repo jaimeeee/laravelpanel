@@ -54,7 +54,14 @@
     plugins: {!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEPlugins'))) !!},
     toolbar: {!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEToolbar'))) !!},
     relative_urls: false,
-    image_advtab: true
+    image_advtab: true,
+    image_list: [
+@if (isset($imageList))
+@foreach ($imageList as $image)
+      {title: '{{ $image['title'] }}', value: '{{ $image['value'] }}'},
+@endforeach
+@endif
+    ]
   });
   </script>
 @yield('footer')
