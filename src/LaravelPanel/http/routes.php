@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Set routes inside the web middleware
+ * Set routes inside the web middleware.
  */
-Route::group(['middleware' => 'web', 'prefix' => config('panel.url')], function() {
-    
-    /**
+Route::group(['middleware' => 'web', 'prefix' => config('panel.url')], function () {
+
+    /*
      * Route to the panel's dashboard
      */
     Route::get('/', 'Jaimeeee\Panel\Controllers\PanelController@dashboard');
-    
-    /**
+
+    /*
      * List certain model
      */
     Route::get('{entity}', 'Jaimeeee\Panel\Controllers\PanelController@formList')->where('entity', '[a-z]+');
-    
-    /**
+
+    /*
      * CRUD methods
      */
     Route::get('{entity}/create', 'Jaimeeee\Panel\Controllers\PanelController@create')->where('entity', '[a-z]+');

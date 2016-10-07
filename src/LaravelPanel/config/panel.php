@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     /*
     |--------------------------------------------------------------------------
     | Panel address
@@ -10,9 +10,9 @@ return [
     | The URL where the panel is going to live.
     |
     */
-    
+
     'url' => '/panel',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Panel name
@@ -21,10 +21,10 @@ return [
     | The panel title.
     |
     */
-    
-    'title' => 'Panel',
+
+    'title'         => 'Panel',
     'title_prepend' => '',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Pagination items
@@ -34,9 +34,9 @@ return [
     | then it won't paginate it. Simple as that.
     |
     */
-    
+
     'paginate' => 30,
-    
+
     /*
     |--------------------------------------------------------------------------
     | TinyMCE plugin configuration
@@ -45,7 +45,7 @@ return [
     | The plugins and toolbar configuration
     |
     */
-    
+
     'tinyMCEPlugins' => '"code,paste,image,media,link,visualblocks,textcolor,colorpicker"',
     'tinyMCEToolbar' => '["undo redo | forecolor removeformat | bold italic | alignleft aligncenter alignright
         alignjustify | image media link | bullist numlist outdent indent | visualblocks code"]',
