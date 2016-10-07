@@ -7,9 +7,10 @@ use Jaimeeee\Panel\HTMLBrick;
 class LineField
 {
     public static $ignore = true;
-    
+
     /**
-     * Creates the field code
+     * Creates the field code.
+     *
      * @return HTMLBrick
      */
     public function code()
