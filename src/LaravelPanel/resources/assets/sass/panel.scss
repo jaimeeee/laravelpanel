@@ -69,6 +69,11 @@ a {
  * Header
  */
 
+// Change z-index for TinyMCE fullscreen.
+.navbar-fixed-bottom, .navbar-fixed-top {
+  z-index: 99;
+}
+
 .navbar {
   background: white;
   border: none;
