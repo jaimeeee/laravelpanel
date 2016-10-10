@@ -55,6 +55,17 @@
     toolbar: {!! preg_replace('/\s+/', ' ', str_replace("\n", '', config('panel.tinyMCEToolbar'))) !!},
     relative_urls: false,
     image_advtab: true,
+    setup: function (editor) {
+        editor.on('init', function(args) {
+            editor = args.target;
+
+            editor.on('NodeChange', function(e) {
+                if (e && e.element.nodeName.toLowerCase() == 'img') {
+                    tinyMCE.DOM.setAttribs(e.element, {'width': null, 'height': null});
+                }
+            });
+        });
+    },
     image_list: [
 @if (isset($imageList))
 @foreach ($imageList as $image)
