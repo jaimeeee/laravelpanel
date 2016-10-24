@@ -206,7 +206,7 @@ class PanelController extends Controller
      */
     private function entityFromYamlFile($entity)
     {
-        $path = config_path('panel/'.ucwords(str_singular($entity)).'.yml');
+        $path = config_path('panel/'.strtolower(str_singular($entity)).'.yml');
 
         if (file_exists($path)) {
             $entity = new Entity($path);
