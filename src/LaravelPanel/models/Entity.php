@@ -23,6 +23,7 @@ class Entity
     public $title;
     public $url;
     public $images;
+    public $slug;
 
     /**
      * Create a new instance from the Yaml data.
@@ -49,6 +50,16 @@ class Entity
         $this->title = isset($this->data['title']) ? $this->data['title'] : $this->name(true);
         $this->url = strtolower(str_plural($this->name));
         $this->images = isset($this->data['images']) ? $this->data['images'] : '';
+
+        // Slug
+        if (isset($this->data['slug'])) {
+            $this->slug['field'] = $this->data['slug']['field'];
+            $this->slug['column'] = $this->data['slug']['column'];
+
+            if (isset($this->data['slug']['separator'])) {
+                $this->slug['separator'] = $this->data['slug']['separator'];
+            }
+        }
 
         // Properties
         $this->deletable = isset($this->data['deletable']) && !$this->data['deletable'] ? false : true;

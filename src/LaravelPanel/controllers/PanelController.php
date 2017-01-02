@@ -91,6 +91,16 @@ class PanelController extends Controller
                 }
             }
 
+            // Save slug
+            if (isset($entity->slug['field']) && $entity->slug['field'] &&
+                isset($entity->slug['column']) && $entity->slug['column']) {
+                $field = $entity->slug['field'];
+                $column = $entity->slug['column'];
+
+                $record->$column = str_slug($record->$field,
+                                                isset($entity->slug['separator']) ? $entity->slug['separator'] : '-');
+            }
+
             $record->save();
 
             foreach ($entity->fields as $field => $options) {
@@ -162,6 +172,16 @@ class PanelController extends Controller
                 if (method_exists($className, 'call')) {
                     $className::call($request, $record, $field, $options);
                 }
+            }
+
+            // Edit slug
+            if (isset($entity->slug['field']) && $entity->slug['field'] &&
+                isset($entity->slug['column']) && $entity->slug['column']) {
+                $field = $entity->slug['field'];
+                $column = $entity->slug['column'];
+
+                $record->$column = str_slug($record->$field,
+                                                isset($entity->slug['separator']) ? $entity->slug['separator'] : '-');
             }
 
             $record->save();
