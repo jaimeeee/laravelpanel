@@ -109,7 +109,7 @@ class ImageField extends InputField
                                (isset($value['prefix']) ? $value['prefix'] : null).
                                $filename.
                                (isset($value['suffix']) ? ($value['suffix'] ? '_'.$value['suffix'] : null) : '_'.$sizeValue).
-                               '.jpg')
+                               (isset($value['format']) ? $value['format'] : '.jpg'))
                         ->destroy();
                 }
             }
