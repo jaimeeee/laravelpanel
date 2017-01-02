@@ -107,8 +107,8 @@ class ImageField extends InputField
                         ->interlace()
                         ->save($directory.
                                (isset($value['prefix']) ? $value['prefix'] : null).
-                               $filename.'_'.
-                               (isset($value['suffix']) ? $value['suffix'] : $sizeValue).
+                               $filename.
+                               (isset($value['suffix']) ? ($value['suffix'] ? '_'.$value['suffix'] : null) : '_'.$sizeValue).
                                '.jpg')
                         ->destroy();
                 }
