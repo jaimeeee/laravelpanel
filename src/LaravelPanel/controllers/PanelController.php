@@ -42,7 +42,7 @@ class PanelController extends Controller
      */
     public function formList($entity)
     {
-        if ($entity = $this->entityFromYamlFile($entity)) {
+        if ($entity = Entity::fromYamlFile($entity)) {
             $list = new FormList($entity);
 
             return $list->view();
@@ -58,7 +58,7 @@ class PanelController extends Controller
      */
     public function create($entity)
     {
-        if ($entity = $this->entityFromYamlFile($entity)) {
+        if ($entity = Entity::fromYamlFile($entity)) {
             $form = new Form($entity, null, Session::get('errors'));
 
             return $form->view();
@@ -74,7 +74,7 @@ class PanelController extends Controller
      */
     public function publish(Request $request, $entity)
     {
-        if ($entity = $this->entityFromYamlFile($entity)) {
+        if ($entity = Entity::fromYamlFile($entity)) {
 
             // Get validation from entity rules and validate
             $this->validate($request, $this->validationRules($entity->fields));
@@ -131,7 +131,7 @@ class PanelController extends Controller
      */
     public function edit($entity, $id)
     {
-        if ($entity = $this->entityFromYamlFile($entity)) {
+        if ($entity = Entity::fromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
             $entityClass = $entity->class;
             $record = $entityClass::findOrFail($id);
@@ -151,7 +151,7 @@ class PanelController extends Controller
      */
     public function update(Request $request, $entity, $id)
     {
-        if ($entity = $this->entityFromYamlFile($entity)) {
+        if ($entity = Entity::fromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
             $entityClass = $entity->class;
             $record = $entityClass::findOrFail($id);
@@ -202,7 +202,7 @@ class PanelController extends Controller
      */
     public function delete($entity, $id)
     {
-        if ($entity = $this->entityFromYamlFile($entity)) {
+        if ($entity = Entity::fromYamlFile($entity)) {
             // Get the record from the database, or fail if it is not found
             $entityClass = $entity->class;
             $record = $entityClass::findOrFail($id);
@@ -214,26 +214,6 @@ class PanelController extends Controller
             return redirect(config('panel.url').'/'.$entity->url.'?deleted=1');
         } else {
             abort(404);
-        }
-    }
-
-    /**
-     * Get an Entity object from a Yaml file.
-     *
-     * @param string $entity The entity name
-     *
-     * @return \Panel\Entity
-     */
-    private function entityFromYamlFile($entity)
-    {
-        $path = config_path('panel/'.strtolower(str_singular($entity)).'.yml');
-
-        if (file_exists($path)) {
-            $entity = new Entity($path);
-
-            return $entity;
-        } else {
-            return false;
         }
     }
 
