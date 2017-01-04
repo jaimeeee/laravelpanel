@@ -83,7 +83,7 @@ class Form extends HTMLBrick
          * Form
          */
         if ($this->record) {
-            $action = url(config('panel.url').'/'.$this->entity->url.'/'.$this->record->id);
+            $action = url(config('panel.url').'/'.$this->entity->url.'/edit/'.$this->record->id);
         } else {
             $action = url(config('panel.url').'/'.$this->entity->url.'/create');
         }

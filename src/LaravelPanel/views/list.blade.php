@@ -61,7 +61,7 @@
 <?php /* Ending of to be optimized part */ ?>
 @endforeach
 @if (in_array('edit', $actions))
-          <td style="text-align: right;"><a href="{{ $entity->url($record->id) }}">{{ trans('panel::global.edit') }} <i class="fa fa-edit fa-fw" aria-hidden="true"></i></a></td>
+          <td style="text-align: right;"><a href="{{ $entity->url('edit/'.$record->id) }}">{{ trans('panel::global.edit') }} <i class="fa fa-edit fa-fw" aria-hidden="true"></i></a></td>
 @endif
 @if (in_array('delete', $actions))
           <td style="text-align: right;"><a href="#" data-toggle="modal" data-target="#delete-modal" data-id="{{ $record->id }}">{{ trans('panel::global.delete') }} <i class="fa fa-trash fa-fw" aria-hidden="true"></i></a></td>
