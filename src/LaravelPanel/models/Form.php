@@ -9,6 +9,8 @@ class Form extends HTMLBrick
     protected $entity;
     protected $record;
     protected $errors;
+    protected $parent;
+    protected $parentEntity;
 
     /**
      * Create a new instance for the entity.
@@ -16,11 +18,13 @@ class Form extends HTMLBrick
      * @param Entity   $entity
      * @param Eloquent $record An eloquent object of a record
      */
-    public function __construct($entity, $record = null, $errors = null)
+    public function __construct($entity, $record = null, $errors = null, $parentEntity = null, $parent = null)
     {
         $this->entity = $entity;
         $this->record = $record;
         $this->errors = $errors;
+        $this->parentEntity = $parentEntity;
+        $this->parent = $parent;
     }
 
     /**
@@ -67,9 +71,15 @@ class Form extends HTMLBrick
                         ]);
         $submitButton->addClass('btn btn-primary');
 
-        $cancelButton = new HTMLBrick('a', trans('panel::global.cancel'), [
-                            'href' => url(config('panel.url').'/'.$this->entity->url),
-                        ]);
+        if ($this->parentEntity) {
+            $cancelButton = new HTMLBrick('a', trans('panel::global.cancel'), [
+                                'href' => url(config('panel.url').'/'.$this->parentEntity->url.'/'.$this->parent->id.'/'.$this->entity->url),
+                            ]);
+        } else {
+            $cancelButton = new HTMLBrick('a', trans('panel::global.cancel'), [
+                                'href' => url(config('panel.url').'/'.$this->entity->url),
+                            ]);
+        }
         $cancelButton->addClass('btn btn-default');
 
         $buttonsContainer = new HTMLBrick('div', $cancelButton.$submitButton);
@@ -82,10 +92,18 @@ class Form extends HTMLBrick
         /*
          * Form
          */
-        if ($this->record) {
-            $action = url(config('panel.url').'/'.$this->entity->url.'/edit/'.$this->record->id);
+        if ($this->parentEntity) {
+            if ($this->record) {
+                $action = url(config('panel.url').'/'.$this->parentEntity->url.'/'.$this->parent->id.'/'.$this->entity->url.'/edit/'.$this->record->id);
+            } else {
+                $action = url(config('panel.url').'/'.$this->parentEntity->url.'/'.$this->parent->id.'/'.$this->entity->url.'/create');
+            }
         } else {
-            $action = url(config('panel.url').'/'.$this->entity->url.'/create');
+            if ($this->record) {
+                $action = url(config('panel.url').'/'.$this->entity->url.'/edit/'.$this->record->id);
+            } else {
+                $action = url(config('panel.url').'/'.$this->entity->url.'/create');
+            }
         }
 
         $formCode = new HTMLBrick('form', $code, [

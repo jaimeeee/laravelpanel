@@ -25,6 +25,9 @@ class Entity
     public $images;
     public $slug;
 
+    public $child;
+    public $children;
+
     /**
      * Create a new instance from the Yaml data.
      *
@@ -58,6 +61,14 @@ class Entity
 
             if (isset($this->data['slug']['separator'])) {
                 $this->slug['separator'] = $this->data['slug']['separator'];
+            }
+        }
+
+        // Children
+        $this->child = isset($this->data['child']) && $this->data['child'] ? $this->data['child'] : false;
+        if (!$this->child && isset($this->data['children'])) {
+            foreach ($this->data['children'] as $childEntity) {
+                $this->children[] = Entity::fromYamlFile($childEntity);
             }
         }
 

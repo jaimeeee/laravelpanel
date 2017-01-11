@@ -22,7 +22,11 @@
     <ul class="nav nav-pills">
 @if (!isset($hideCreateRecord) || !$hideCreateRecord)
       <li>
+@if (isset($parentEntity) && $parentRecord)
+        <a href="{{ $parentEntity->url($parentRecord->id.'/'.$entity->url.'/create') }}">{{ trans('panel::global.new_entity', ['entity' => $entity->name()]) }}</a>
+@else
         <a href="{{ $entity->url('create') }}">{{ trans('panel::global.new_entity', ['entity' => $entity->name()]) }}</a>
+@endif
       </li>
 @endif
     </ul>
@@ -32,6 +36,11 @@
 @foreach ($rows as $property => $name)
           <th>{{ $name }}</th>
 @endforeach
+@if ($entity->children)
+@foreach ($entity->children as $child)
+          <th></th>
+@endforeach
+@endif
 @if (in_array('edit', $actions))
           <th></th>
 @endif
@@ -60,8 +69,17 @@
 @endif
 <?php /* Ending of to be optimized part */ ?>
 @endforeach
+@if ($entity->children)
+@foreach ($entity->children as $child)
+          <td><a href="{{ $entity->url($record->id.'/'.$child->url) }}">{!! $child->icon ? '<i class="'.$child->icon.' fa-fw" aria-hidden="true"></i> ': '' !!}{{ $child->name(true) }}</a></td>
+@endforeach
+@endif
 @if (in_array('edit', $actions))
+@if (isset($parentEntity) && $parentRecord)
+          <td style="text-align: right;"><a href="{{ $parentEntity->url($parentRecord->id.'/'.$entity->url.'/edit/'.$record->id) }}">{{ trans('panel::global.edit') }} <i class="fa fa-edit fa-fw" aria-hidden="true"></i></a></td>
+@else
           <td style="text-align: right;"><a href="{{ $entity->url('edit/'.$record->id) }}">{{ trans('panel::global.edit') }} <i class="fa fa-edit fa-fw" aria-hidden="true"></i></a></td>
+@endif
 @endif
 @if (in_array('delete', $actions))
           <td style="text-align: right;"><a href="#" data-toggle="modal" data-target="#delete-modal" data-id="{{ $record->id }}">{{ trans('panel::global.delete') }} <i class="fa fa-trash fa-fw" aria-hidden="true"></i></a></td>
@@ -104,7 +122,11 @@
       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
       var modal = $(this);
-      modal.find('.modal-action').attr('href', '{{ $entity->url() }}/' + recipient + '/delete');
+@if (isset($parentEntity) && $parentRecord)
+      modal.find('.modal-action').attr('href', '{{ $parentEntity->url() . '/' . $parentRecord->id . '/' . $entity->url }}/delete/' + recipient);
+@else
+      modal.find('.modal-action').attr('href', '{{ $entity->url() }}/delete/' + recipient);
+@endif
     });
   </script>
 @endif

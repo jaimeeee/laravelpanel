@@ -29,7 +29,7 @@
       </ul>
       <ul class="nav nav-sidebar">
 @foreach ($list as $entity)
-@if (!$entity->hidden)
+@if (!$entity->hidden && !$entity->child)
         <li{!! Request::is(ltrim(config('panel.url'), '/') . '/' . $entity->url . '*') ? ' class="active"' : null !!}><a href="{{ $entity->url() }}"><i class="{{ $entity->icon }} fa-fw" aria-hidden="true"></i> {{ $entity->name(true) }}</a></li>
 @endif
 @endforeach

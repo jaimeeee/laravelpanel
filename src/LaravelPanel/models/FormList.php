@@ -2,13 +2,44 @@
 
 namespace Jaimeeee\Panel;
 
+use Jaimeeee\Panel\Entity;
+
 class FormList
 {
     private $entity;
+    private $parentRecord;
+    private $childEntity;
+    private $childre;
 
-    public function __construct($entity)
+    public function __construct($entity, $parent = false, $childEntity = false)
     {
         $this->entity = $entity;
+        $this->parentRecord = $parent;
+        $this->childEntity = $childEntity;
+    }
+
+    public function childView()
+    {
+        $records = $this->parentRecord->{$this->childEntity->child};
+
+        $actions = [];
+        if ($this->childEntity->deletable) {
+            $actions[] = 'delete';
+        }
+        if ($this->childEntity->editable) {
+            $actions[] = 'edit';
+        }
+
+        return view('panel::list', [
+                        'actions'          => $actions,
+                        'parentEntity'     => $this->entity,
+                        'parentRecord'     => $this->parentRecord,
+                        'entity'           => $this->childEntity,
+                        'hideCreateRecord' => $this->childEntity->hideCreate,
+                        'records'          => $records,
+                        'rows'             => $this->childEntity->list,
+                        'title'            => $this->childEntity->title,
+                    ]);
     }
 
     public function view()
