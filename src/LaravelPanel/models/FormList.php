@@ -2,8 +2,6 @@
 
 namespace Jaimeeee\Panel;
 
-use Jaimeeee\Panel\Entity;
-
 class FormList
 {
     private $entity;

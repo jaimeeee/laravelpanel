@@ -26,7 +26,7 @@ Route::group(['middleware' => 'web', 'prefix' => config('panel.url')], function 
     Route::post('{entity}/edit/{id}', 'Jaimeeee\Panel\Controllers\PanelController@update')->where(['entity' => '[a-z]+', 'id' => '[0-9]+']);
     Route::get('{entity}/delete/{id}', 'Jaimeeee\Panel\Controllers\PanelController@delete')->where(['entity' => '[a-z]+', 'id' => '[0-9]+']);
 
-    /**
+    /*
      * Children CRUD methods
      */
     Route::get('{entity}/{record}/{child}/create', 'Jaimeeee\Panel\Controllers\PanelController@create')->where(['entity' => '[a-z]+', 'record' => '[0-9]+', 'child' => '[a-z]+']);
