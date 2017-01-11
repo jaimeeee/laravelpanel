@@ -3,13 +3,11 @@
 namespace Jaimeeee\Panel\Controllers;
 
 use App\Http\Controllers\Controller;
-use File;
 use Illuminate\Http\Request;
 use Jaimeeee\Panel\Entity;
 use Jaimeeee\Panel\Form;
 use Jaimeeee\Panel\FormList;
 use Session;
-use Symfony\Component\Yaml\Yaml;
 
 class PanelController extends Controller
 {
@@ -75,7 +73,7 @@ class PanelController extends Controller
             $form = new Form($entityObject, null, Session::get('errors'));
 
             return $form->view();
-        } else if (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child)) ) {
+        } elseif (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
             // Get parent's record
             $parentRecord = $parentEntity->class::findOrFail($record);
 
@@ -95,8 +93,7 @@ class PanelController extends Controller
     public function publish(Request $request, $entity, $record = null, $child = null)
     {
         if (!$record && !$child && ($entityObject = Entity::fromYamlFile($entity))) {
-
-        } else if (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child)) ) {
+        } elseif (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
             // Get parent's record
             $parentRecord = $parentEntity->class::findOrFail($record);
         } else {
@@ -130,7 +127,7 @@ class PanelController extends Controller
 
         // Save parent
         if (isset($parentRecord) && $parentRecord) {
-            $row = snake_case(class_basename($parentEntity->class)) . '_id';
+            $row = snake_case(class_basename($parentEntity->class)).'_id';
 
             $record->$row = $parentRecord->id;
         }
@@ -174,7 +171,7 @@ class PanelController extends Controller
             $form = new Form($entityObject, $record, Session::get('errors'));
 
             return $form->view();
-        } else if (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
+        } elseif (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
             // Get parent's record
             $parentRecord = $parentEntity->class::findOrFail($id);
 
@@ -201,7 +198,7 @@ class PanelController extends Controller
             // Get the record from the database, or fail if it is not found
             $entityClass = $entityObject->class;
             $recordObject = $entityClass::findOrFail($id);
-        } else if (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child)) ) {
+        } elseif (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
             // Get parent's record
             $parentRecord = $parentEntity->class::findOrFail($id);
 
@@ -269,7 +266,7 @@ class PanelController extends Controller
             $recordObject->delete();
 
             return redirect(config('panel.url').'/'.$entity->url.'?deleted=1');
-        } else if (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
+        } elseif (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
             // Get parent's record
             $parentRecord = $parentEntity->class::findOrFail($id);
 

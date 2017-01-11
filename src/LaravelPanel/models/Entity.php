@@ -68,7 +68,7 @@ class Entity
         $this->child = isset($this->data['child']) && $this->data['child'] ? $this->data['child'] : false;
         if (!$this->child && isset($this->data['children'])) {
             foreach ($this->data['children'] as $childEntity) {
-                $this->children[] = Entity::fromYamlFile($childEntity);
+                $this->children[] = self::fromYamlFile($childEntity);
             }
         }
 
@@ -151,7 +151,8 @@ class Entity
 
     /**
      * Get Entity object from Yaml file.
-     * @param  String $entity
+     *
+     * @param string $entity
      *
      * @return Entity
      */
@@ -160,7 +161,7 @@ class Entity
         $path = config_path('panel/'.strtolower(str_singular($entity)).'.yml');
 
         if (file_exists($path)) {
-            $entity = new Entity($path);
+            $entity = new self($path);
 
             return $entity;
         } else {
