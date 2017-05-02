@@ -1,3 +1,5 @@
+[![Packagist](https://img.shields.io/packagist/v/jaimeeee/laravelpanel.svg)](https://packagist.org/packages/jaimeeee/laravelpanel) [![Packagist](https://img.shields.io/packagist/dt/jaimeeee/laravelpanel.svg)](https://packagist.org/packages/jaimeeee/laravelpanel)
+
 # laravelpanel
 A Panel for Laravel Websites that provides an easy way to create, edit and delete new objects in your database, with almost no effort in configuration files.
 
