@@ -265,7 +265,7 @@ class PanelController extends Controller
 
             $recordObject->delete();
 
-            return redirect(config('panel.url').'/'.$entity->url.'?deleted=1');
+            return redirect(config('panel.url').'/'.$entityObject->url.'?deleted=1');
         } elseif (($parentEntity = Entity::fromYamlFile($entity)) && ($entityObject = Entity::fromYamlFile($child))) {
             // Get parent's record
             $parentRecord = $parentEntity->class::findOrFail($id);
