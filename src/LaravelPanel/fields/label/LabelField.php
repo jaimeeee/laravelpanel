@@ -16,7 +16,7 @@ class LabelField extends BaseField
      */
     public function field()
     {
-        $label = new HTMLBrick('p', $this->label);
+        $label = new HTMLBrick('p', $this->value);
         $label->addClass('form-control-static');
 
         return $label;
